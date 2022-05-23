@@ -1,7 +1,9 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Episode from './../Episode';
+
+
 const testEpisode = {
   id: 1,
   name: 'test',
@@ -17,10 +19,19 @@ test("renders without error", () => {
 });
 
 test("renders the summary test passed as prop", () => {
-  render(<Episode  episode={testEpisode}/>); render(<Episode  episode={testEpisode}/>)
+  render(<Episode  episode={testEpisode}/>);
+  const summary = screen.getByText('this show sucks lmao');
+  expect(summary).toBeInTheDocument();
+  expect(summary).not.toBeNull();
+  expect(summary).toBeTruthy();
 
-  const episodeSummary = null;
-  
  });
 
-// test("renders default image when image is not defined", () => { });
+test("renders default image when image is not defined", () => { 
+  render(<Episode episode={testEpisode} />);
+
+  const image = screen.getByAltText('https://i.ibb.co/2FsfXqM/stranger-things.png');
+
+  expect(image).toBeInTheDocument();
+
+});
